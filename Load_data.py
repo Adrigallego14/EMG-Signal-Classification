@@ -1,17 +1,10 @@
-import pandas as pd
+#Definir la ruta al archivo CSV
+Sujeto1 = "/content/drive/MyDrive/TFG/DataEdwin/Dataset/EDW_mod.csv" #12000
+Sujeto2 = "/content/drive/MyDrive/TFG/DataEdwin/Dataset/GIANLUCA_mod.csv" #10000
+Sujeto3 = "/content/drive/MyDrive/TFG/DataEdwin/Dataset/LEO_mod.csv" #32000
 
-def cargar_y_preprocesar_datos(ruta_archivo_tab):
-    # Cargar datos desde el archivo
-    data = pd.read_csv(ruta_archivo_tab, sep='\t')
 
-    # Realizar el preprocesamiento
-    columnas_emg = ['EMG1', 'EMG2', 'EMG3', 'EMG4', 'EMG5', 'EMG6', 'EMG7', 'EMG8']
-    factor_conversion = 0.045
-
-    for columna in columnas_emg:
-        data[columna] = data[columna] * factor_conversion
-
-    return data
-
-# Ruta del archivo
-ruta_archivo_tab = '/content/drive/MyDrive/TFG/Datasets/subject_3_EMG.tab'
+#Leer el archivo CSV con el delimitador adecuado
+df1 = pd.read_csv(Sujeto1)
+df2 = pd.read_csv(Sujeto2)
+df3 = pd.read_csv(Sujeto3)
