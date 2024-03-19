@@ -3,23 +3,15 @@ import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
 from scipy import signal
-from sklearn.preprocessing import normalize
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.model_selection import train_test_split
-from sklearn import svm, datasets
-import sklearn.model_selection as model_selection
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import f1_score
-from sklearn.metrics import precision_score, recall_score
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.feature_selection import SelectKBest, f_classif
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import confusion_matrix
 import math
 import pywt
 import seaborn as sns
+import evaluate_knn
+import evaluate_mlp
+import evaluate_rbf_svm
+import Feature_extraction
+import Preprocessing
+import plot_Tasks
 
 #Definir la ruta al archivo CSV
 Sujeto1 = "/content/drive/MyDrive/TFG/DataEdwin/Dataset/EDW_mod.csv" #12000
@@ -168,22 +160,9 @@ y2 = np.array(FeaturesCH1_Sj2.Task)
 y3 = np.array(FeaturesCH1_Sj3.Task)
 
 X_train, X_test, y_train, y_test = train_test_split(X3, y3, test_size=0.2, random_state=55)
-rbf = svm.SVC(kernel='rbf', gamma='scale', C=5).fit(X_train, y_train)
-rbf_pred = rbf.predict(X_test)
-rbf_accuracy = accuracy_score(y_test, rbf_pred)
-rbf_f1 = f1_score(y_test, rbf_pred, average='weighted')
-print('Accuracy (RBF Kernel): ', "%.2f" % (rbf_accuracy*100))
-print('F1 (RBF Kernel): ', "%.2f" % (rbf_f1*100))
-rbf_precision = precision_score(y_test, rbf_pred, average =  'weighted')
-rbf_recall = recall_score(y_test, rbf_pred, average ='weighted')
-print('Precision (RBF Kernel): ', "%.2f" % (rbf_precision*100))
-print('Recall (RBF Kernel): ', "%.2f" % (rbf_recall*100))
-conf_matrx_svm = confusion_matrix(y_test, rbf_pred)
 
-# Visualizar la matriz de confusión con seaborn
-plt.figure(figsize=(8, 6))
-sns.heatmap(conf_matrx_svm, annot=True, fmt='d', cmap='Blues', cbar=False)
-plt.xlabel('Predicciones')
-plt.ylabel('Valores Verdaderos')
-plt.title('Matriz de Confusión')
-plt.show()
+#Entrenamos y evaluamos los respectivos algoritmos.
+
+evaluate_rbf_svm(X_train, y_train, X_test, y_test)
+evaluate_mlp(X_train, y_train, X_test, y_test)
+evaluate_knn(X_train, y_train, X_test, y_test)
